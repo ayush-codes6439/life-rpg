@@ -43,3 +43,6 @@ Turn real-world tasks into an epic RPG progression system. Earn XP, level up, bu
 git clone https://github.com/YOUR_USERNAME/life-rpg.git
 cd life-rpg
 npm install
+
+---
+Built with ❤️ for hackathon
