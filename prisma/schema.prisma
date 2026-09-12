@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+
+  character Character?
+  tasks     Task[]
+  inventory InventoryItem[]
+  logs      ActivityLog[]
+}
+
+model Character {
+  id         String    @id @default(cuid())
+  userId     String    @unique
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  level      Int       @default(1)
+  totalXP    Int       @default(0)
+  gold       Int       @default(0)
+
+  intellect  Int       @default(0)
+  strength   Int       @default(0)
+  vitality   Int       @default(0)
+  creativity Int       @default(0)
+
+  streak     Int       @default(0)
+  lastActive DateTime?
+  theme      String    @default("cozy")
+
+  updatedAt  DateTime  @updatedAt
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title       String
+  description String?
+  attribute   String
+  difficulty  String
+  xpReward    Int
+  goldReward  Int
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+}
+
+model ShopItem {
+  id          String @id
+  name        String
+  description String
+  price       Int
+  category    String
+  icon        String
+}
+
+model InventoryItem {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  itemId      String
+  purchasedAt DateTime @default(now())
+
+  @@unique([userId, itemId])
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String
+  message   String
+  createdAt DateTime @default(now())
+}
