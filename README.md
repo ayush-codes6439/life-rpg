@@ -4,8 +4,8 @@ Turn real-world tasks into an epic RPG progression system. Earn XP, level up, bu
 
 ## 🌐 Live Demo
 
-- **Live App:** [https://])
-- **Video Walkthrough:** [Link])
+- **Live App:** https://life-rpg-git-main-ayyuussh08-4799.vercel.app
+
 
 ## ✨ Features
 
